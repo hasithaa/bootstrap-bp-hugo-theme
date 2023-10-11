@@ -1,7 +1,6 @@
 {{- $path := .Path}}
 {{- $Page := .Page }}
 {{- $Test := .Test }}
-{{- $Root := default false .Root}}
 {{- $Project := .Project }}
     {{range $key := (readDir $path) }}
         {{if .IsDir}}

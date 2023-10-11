@@ -1,7 +1,7 @@
 {{- .Page.Scratch.Set "count" 0}}
 {{- .Page.Scratch.Set "contents" dict }}
 {{- $Test := default false (.Get "test")}}
-{{- $Project := default false (.Get "project")}}
+{{- $Project := default true (.Get "project")}}
 {{- $data := .Site.Data.site }}
 <div class="example-view container mt-3 mb-3">
     <div class="row">
