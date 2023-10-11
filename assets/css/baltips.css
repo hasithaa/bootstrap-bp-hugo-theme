@@ -1,0 +1,145 @@
+.example-view {
+    @media (min-width: 992px) {
+        overflow-y: scroll;
+        min-height: 400px;
+        max-height: 600px;
+    }
+
+    background-color: #fff;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    overflow-x: scroll;ß
+}
+
+.folder-tree-wrapper {
+    width: 220px;
+    padding: 5px;
+}
+
+.folder-tree {
+    list-style: none;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+.folder-tree li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    transition: all .4s ease;
+    position: relative;
+}
+
+.folder-tree li:hover {}
+
+.folder-tree li ul {
+    padding-left: 10px;
+    padding-top: 8px;
+}
+
+.folder-tree ul {
+    display: none;
+    position: relative;
+}
+
+.folder-tree ul:before {
+    position: absolute;
+    content: '';
+    left: -10px;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: transparent;
+    border-left: dashed 1px #c2c2c2;
+    border-bottom: dashed 1px #c2c2c2;
+}
+
+.folder-tree li ul li {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.folder-tree .arrow {
+    position: absolute;
+    top: 4px;
+    left: -14px;
+    width: 8px;
+    height: 8px;
+    transition: all .4s ease;
+    transform: rotate(-90deg);
+}
+
+.folder-tree .arrow i {
+    color: #595959;
+    transition: all .4s ease;
+}
+
+.folder-tree .arrow:hover i {
+    color: #292929;
+}
+
+.folder-tree li.expanded>ul {
+    display: block;
+}
+
+.folder-tree li.expanded>.arrow {
+    transform: rotate(0deg);
+}
+
+.sourceview {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.tabcontent {
+    width: 100%;
+    padding: 10px;
+    display: block;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: start;
+    min-height: 260px;
+}
+
+.tabs {
+    width: 100%;
+}
+
+.filename {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.tablinks {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #007bff;
+    text-align: left;
+}
+
+.tablinks:hover {
+    color: #0056b3;
+}
+
+.tablinks.active {
+    color: #0056b3;
+    border-bottom: 2px solid #007bff;
+}
+
+.tabcontent {
+    display: none;
+    padding: 10px;
+}
+
+.tabcontent:target,
+.tabcontent:active {
+    display: block;
+}
+
+.example-view button {
+    background-color: transparent !important;
+    color: inherit !important;
+}

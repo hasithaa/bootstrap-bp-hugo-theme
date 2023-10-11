@@ -1,0 +1,4 @@
+{{- $pwd := .Page.File.Dir }}
+{{- $content := os.ReadFile (print $pwd "output.txt") }}
+{{- $ss := print "```plain {linenos=table}\n" $content "\n```\n" }}
+{{- $ss | markdownify}}

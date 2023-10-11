@@ -1,0 +1,58 @@
+{{- .Page.Scratch.Set "count" 0}}
+{{- .Page.Scratch.Set "contents" dict }}
+{{- $Test := default false (.Get "test")}}
+{{- $Project := default false (.Get "project")}}
+{{- $data := .Site.Data.site }}
+<div class="example-view container mt-3 mb-3">
+    <div class="row">
+        <div class="folder-tree-wrapper col col-lg-3">
+            <div class="p-3 text-primary">
+                <i class="fas fa-project-diagram"></i> Ballerina Project
+            </div>
+            <div>
+                <ul class="folder-tree">
+                    {{ partial "renderdir.html" (dict "Path" (print "content/" .Page.File.Dir) "Page" .Page "Test" $Test
+                    "Project" $Project "Root" true)}}
+                </ul>
+            </div>
+            <hr>
+            <div style="font-size: x-small; text-align: right;">
+                <img src="/icons/visual-studio-code-blue-15304.svg" width="15px" style="margin: auto;" />
+                <a target="_blank" href="vscode://wso2.ballerina/open-repo?repoUrl={{ index $data " repo" | safeURL }}"
+                    title="Open in VSCode">
+                    Open in VSCode
+                </a>
+                <!-- Add output -->
+            </div>
+        </div>
+        <div class="tabs col col-lg">
+            {{- $fileContents := .Page.Scratch.Get "contents" }}
+            {{- range $key, $value := $fileContents }}
+            <div class="tabcontent" id="{{ $key }}">
+                {{ $lang := "plain" }}
+                {{- if strings.HasSuffix $key ".bal" }}
+                {{- $lang = "ballerina" }}
+                {{- else if strings.HasSuffix $key ".toml"}}
+                {{- $lang = "toml" }}
+                {{- else if strings.HasSuffix $key ".json"}}
+                {{- $lang = "json" }}
+                {{- else if strings.HasSuffix $key ".xml"}}
+                {{- $lang = "xml" }}
+                {{- else if strings.HasSuffix $key ".md"}}
+                {{- $lang = "markdown" }}
+                {{- end }}
+                {{- $ss := "" }}
+                {{- if eq $lang "markdown"}}
+                {{- $value | markdownify }}
+                {{- else }}
+                {{- $ss = print "```" $lang " {linenos=table}\n" $value "\n```\n" }}
+                {{- $ss | markdownify}}
+                {{- end }}
+            </div>
+            {{- end }}
+        </div>
+        <div style="text-align: center;">
+            <!-- Add output -->
+        </div>
+    </div>
+</div>

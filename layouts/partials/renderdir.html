@@ -1,0 +1,84 @@
+{{- $path := .Path}}
+{{- $Page := .Page }}
+{{- $Test := .Test }}
+{{- $Root := default false .Root}}
+{{- $Project := .Project }}
+    {{range $key := (readDir $path) }}
+        {{if .IsDir}}
+            {{- $supported := true }}
+            {{- $icon := "text-secondary"}}
+            {{- if (eq .Name "tests") }}
+                {{- if eq $Test true}}
+                    {{- $supported = true }}
+                {{- else }}
+                    {{- $supported = false}}
+                {{- end }}
+                {{ $icon = "text-success" }}
+            {{- else if (eq .Name "target")}}
+                {{- $supported = false }}
+            {{- end}}
+            {{- if eq $supported true}}
+                <li>
+                <i class="fa fa-folder {{$icon}}"></i>&nbsp;{{.Name}}
+                <div class="arrow"><i class="fa fa-angle-down"></i></div>
+                <ul>
+                    {{ partial "renderdir.html" (dict "Path" (path.Join $path .Name) "Page" $Page "Test" $Test "Project" $Project) }}
+                </ul>
+                </li>
+            {{- end }}
+        {{else}}
+            {{- $supported := false }}
+            {{- $icon := "" }}
+            {{- $count := $Page.Scratch.Get "count" }}
+            {{- if (strings.HasSuffix $key.Name ".bal")}}
+                {{- $supported = true }}
+                {{- $icon = "far fa-file-alt" }}
+                {{ if not (strings.Contains $path "tests")}}
+                    {{- $count = add $count 1 }}
+                    {{- $Page.Scratch.Set "count" $count }}
+                {{- end}}
+            {{- else if (strings.HasSuffix $key.Name ".toml")}}
+                {{- if (eq $key.Name "Ballerina.toml")}}
+                    {{- if eq $Project true}}
+                        {{- $supported = true }}
+                        {{- $icon = "fas fa-cog" }}
+                    {{- else }}
+                        {{- $supported = false }}
+                    {{- end }}
+                {{- else }}
+                    {{- $supported = true }}
+                    {{- $icon = "far fa-file-code" }}
+                {{- end }}
+            {{- else if (strings.HasSuffix $key.Name ".json")}}
+                {{- $supported = true }}
+                {{- $icon = "far fa-file-code" }}
+            {{- else if (strings.HasSuffix $key.Name ".xml")}}
+                {{- $supported = true }}
+                {{- $icon = "far fa-file-code" }}
+            {{- else if (strings.HasSuffix $key.Name ".yaml")}}
+                {{- $supported = true }}
+                {{- $icon = "far fa-file-code" }}
+            {{- end }}
+            {{- if eq $supported true }}
+                <li><i class="{{$icon}}"></i>&nbsp;<button class="tablinks" title="Show File"
+                        onclick="openCode(event, '{{ $key.Name }}')" 
+                        {{- if eq $count 1}}id="defaultOpen" {{- end }}>{{- $key.Name }}</button>
+                </li>
+                {{- $fileContents := $Page.Scratch.Get "contents" }}
+                {{- $content := os.ReadFile (path.Join $path .Name) }}
+                {{- $fileContents = merge $fileContents (dict .Name $content)}}
+                {{- $details := (print .Name ".md")}}
+                {{- $detailsPath := path.Join $path $details }}
+                {{- if os.FileExists $detailsPath }}
+                    <li class="text-info"><span class="p-2"></span>
+                        <i class="fas fa-share fa-flip-vertical"></i>
+                        <button class="tablinks" title="See Details"
+                            onclick="openCode(event, '{{ $details }}')"><i class="far fa-lightbulb"></i> Tips</button>
+                    </li>
+                    {{- $mdcontent := os.ReadFile $detailsPath }}
+                    {{- $fileContents = merge $fileContents (dict $details $mdcontent)}}
+                {{- end }}
+                {{- $Page.Scratch.Set "contents" $fileContents }}
+            {{- end }}
+        {{end}}
+{{end}}
