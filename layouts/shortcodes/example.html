@@ -18,14 +18,14 @@
             <hr>
             <div style="font-size: x-small; text-align: right;">
                 <img src="/icons/visual-studio-code-blue-15304.svg" width="15px" style="margin: auto;" />
-                <a target="_blank" href="vscode://wso2.ballerina/open-repo?repoUrl={{ index $data " repo" | safeURL }}"
+                <a target="_blank" href="vscode://wso2.ballerina/open-repo?repoUrl={{ .Site.Params.exampleRepo | safeURL }}"
                     title="Open in VSCode">
                     Open in VSCode
                 </a>
                 <!-- Add output -->
             </div>
         </div>
-        <div class="tabs col col-lg">
+        <div class="tabs col col-lg-8">
             {{- $fileContents := .Page.Scratch.Get "contents" }}
             {{- range $key, $value := $fileContents }}
             <div class="tabcontent" id="{{ $key }}">

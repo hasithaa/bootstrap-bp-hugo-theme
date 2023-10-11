@@ -6,12 +6,28 @@
     }
 
     background-color: #fff;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    overflow-x: scroll;ß
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    overflow-x: scroll;
+}
+
+.example-view h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+.example-view h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.example-view .highlight {
+    margin: 1.5rem;
 }
 
 .folder-tree-wrapper {
+    @media (min-width: 992px) {
+        border-right: 1px solid #ddd;
+    }
     width: 220px;
     padding: 5px;
 }
@@ -143,3 +159,4 @@
     background-color: transparent !important;
     color: inherit !important;
 }
+

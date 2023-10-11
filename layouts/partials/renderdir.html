@@ -45,6 +45,8 @@
                     {{- else }}
                         {{- $supported = false }}
                     {{- end }}
+                {{- else if (eq $key.Name "Dependencies.toml")}}
+                    {{- $supported = false }}
                 {{- else }}
                     {{- $supported = true }}
                     {{- $icon = "far fa-file-code" }}

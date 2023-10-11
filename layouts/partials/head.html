@@ -18,8 +18,8 @@
 {{ end }}
 
 {{ $cssfontawesome := resources.Get "/css/fontawesome-free-5.13.0-web-all.min.css" }}
-{{ $cssbaltip := resources.Get "/css/baltips.css" }}
 {{ $csstheme := resources.Get (printf "/sass/main-%s.scss" $themeColor) | toCSS }}
+{{ $cssbaltip := resources.Get "/css/baltips.css" }}
 {{ $customcss := resources.Get "/css/custom.css" }}
 {{ $allcss := slice $cssbaltip $cssfontawesome $csstheme $customcss | resources.Concat "/css/vendor.css" | minify | fingerprint "sha512" }}
 <link rel="stylesheet" href="{{ $allcss.RelPermalink }}" integrity="{{ $allcss.Data.Integrity }}">

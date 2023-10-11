@@ -12,12 +12,24 @@
         </blockquote>
     {{ end }}
 
-    {{ if .Scratch.Get "showPostSummary" }}
-        <p class="card-text">{{ .Summary }}</p>
+    {{ $Page := . }}
+    {{ $Path := (print "content/" .File.Dir)}}
+    {{ range $key := os.ReadDir $Path }}
+        {{ if eq $key.Name "short.md" }}
+            {{- $Page.Scratch.Set "hasShort" true }}
+            {{- $Page.Scratch.Set "shortContent" (os.ReadFile ( path.Join $Path $key.Name)) }}
+        {{ end }}
+    {{ end }}
 
+    {{ if .Scratch.Get "showPostSummary" }}
+        {{ if .Scratch.Get "hasShort" }}
+            <p class="card-text">{{ .Scratch.Get "shortContent" | markdownify }}</p>
+        {{ else }}
+            <p class="card-text">{{ .Summary }}</p>
+        {{ end }}
         <a href="{{ .RelPermalink }}" class="card-link">{{ i18n "readmore" }}&hellip;</a>
         {{ if ne .Site.Params.hideReadingTime true }}
-             (<i class="fas fa-clock"></i>&nbsp;~{{ .ReadingTime }} Min.)
+            (<i class="fas fa-clock"></i>&nbsp;~{{ .ReadingTime }} Min.)
         {{end}}
     {{ else }}
         <p class="card-text">{{ .Content }}</p>
