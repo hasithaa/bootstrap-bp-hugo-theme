@@ -12,11 +12,35 @@
                 </ul>
             </div>
             <div class="col-12 col-md-3 mb-3">
-                <h5>{{ i18n "site" }}</h5>
                 <ul class="list-unstyled">
                     {{ range $index, $element := .Site.Menus.footer }}
                         {{ if .HasChildren }}
+                            <li>{{if .URL}}
+                                <a href="{{ .URL }}">{{ .Pre }} {{ .Name }}</a>
+                                {{ else }}
+                                <span><h5>{{.Pre }} {{ .Name }}</h5></span>
+                                {{ end }}
+                            </li>
+                            {{ range .Children }}
+                                <li><a href="{{ .URL }}">{{ .Pre }} {{ .Name }}</a></li>
+                            {{ end }}
+                            <br>
+                        {{ else }}
                             <li><a href="{{ .URL }}">{{ .Pre }} {{ .Name }}</a></li>
+                        {{ end }}
+                    {{ end }}
+                </ul>
+            </div>
+            <div class="col-12 col-md-3 mb-3">
+                <ul class="list-unstyled">
+                    {{ range $index, $element := .Site.Menus.footer2 }}
+                        {{ if .HasChildren }}
+                            <li>{{if .URL}}
+                                <a href="{{ .URL }}">{{ .Pre }} {{ .Name }}</a>
+                                {{ else }}
+                                <h5>{{.Pre }} {{ .Name }}</h5>
+                                {{ end }}
+                            </li>
                             {{ range .Children }}
                                 <li><a href="{{ .URL }}">{{ .Pre }} {{ .Name }}</a></li>
                             {{ end }}
