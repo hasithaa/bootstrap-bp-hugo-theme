@@ -50,11 +50,16 @@
                     {{ end }}
                 </ul>
             </div>
-            <div class="col-12 col-md-3 mb-3">
-                {{ partial "i18nlist.html" . }}
-
-                &copy; {{ .Site.Params.startYear }}-{{ now.Format "2006" }} {{ with .Site.Params.author }}{{ . }}{{ end }}<br/>
-            </div>
         </div>
+    </div>
+    {{ with .Site.Params.privacyNotice}} 
+        <div class="container mb-3">
+            {{ . | markdownify }}
+        </div>
+    {{ end }}
+    <div class="container mb-5">
+        {{ partial "i18nlist.html" . }}
+
+        &copy; {{ .Site.Params.startYear }}-{{ now.Format "2006" }} {{ with .Site.Params.author }}{{ . }}{{ end }}<br/>
     </div>
 </footer>
