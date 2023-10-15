@@ -1,0 +1,17 @@
+{{ $PageURL := .Get 0}}
+{{ with .Site.GetPage $PageURL }}
+{{ $Page := . }}
+{{ $Path := (print "content/" .File.Dir)}}
+{{ range $key := os.ReadDir $Path }}
+{{ if eq $key.Name "short.md" }}
+<div class="card">
+    <div class="card-body">
+        {{- (os.ReadFile ( path.Join $Path $key.Name)) | markdownify }}
+    </div>
+    <div class="card-header">
+        <a href="{{ $Page.RelPermalink }}" class="">Read more</a>
+    </div>
+</div>
+{{ end }}
+{{ end }}
+{{end }}
